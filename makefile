@@ -4,6 +4,7 @@ CFLAGS = -Wall -g -Wextra -Wno-unused-parameter -Wno-unused-variable -I./include
 SRCDIR = src
 BUILDDIR = build
 BINDIR = bin
+ASMDIR = assembly
 
 SOURCES = $(wildcard $(SRCDIR)/*.c)
 EXECUTABLE = $(BUILDDIR)/$(BINDIR)/Clox
@@ -13,7 +14,7 @@ EXECUTABLE = $(BUILDDIR)/$(BINDIR)/Clox
 all: $(EXECUTABLE)
 
 $(EXECUTABLE):
-	$(CC) $(CFLAGS) -o $@ $(SOURCES)
+	$(CC) $(CFLAGS) -Wno-unused-parameter -Wno-unused-variable -o $@ $(SOURCES)
 
 clean: 
 	rm -rf $(EXECUTABLE)
