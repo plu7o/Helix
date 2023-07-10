@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -g -Wextra -Wno-unused-parameter -Wno-unused-variable -I./include
+CFLAGS = -Wall -g -Wextra -I./include
 
 SRCDIR = src
 BUILDDIR = build
@@ -18,4 +18,8 @@ $(EXECUTABLE):
 
 clean: 
 	rm -rf $(EXECUTABLE)
+
+asm:
+
+	$(CC) -S $(SOURCES) && mv *.s $(BUILDDIR)/$(ASMDIR)
 

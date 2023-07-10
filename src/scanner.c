@@ -36,7 +36,7 @@ static char peek() { return *scanner.current; }
 static char peekNext() {
   if (isAtEnd())
     return '\0';
-  return scanner.current[-1];
+  return scanner.current[1];
 }
 
 static bool match(char expected) {
@@ -86,6 +86,7 @@ static void skipWhitespace() {
       } else {
         return;
       }
+      break;
     default:
       return;
     }
@@ -116,10 +117,9 @@ static TokenType identifierType() {
         return checkKeyword(2, 3, "lse", TOKEN_FALSE);
       case 'o':
         return checkKeyword(2, 1, "r", TOKEN_FOR);
-      case 'u':
-        return checkKeyword(2, 2, "nc", TOKEN_FUNC);
       }
     }
+    return checkKeyword(1, 1, "n", TOKEN_FUNC);
     break;
   case 'i':
     return checkKeyword(1, 1, "f", TOKEN_IF);
@@ -216,6 +216,8 @@ Token scanToken() {
     return makeToken(TOKEN_RIGHT_BRACE);
   case ';':
     return makeToken(TOKEN_SEMICOLON);
+  case ':':
+    return makeToken(TOKEN_COLON);
   case ',':
     return makeToken(TOKEN_COMMA);
   case '.':
