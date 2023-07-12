@@ -1,11 +1,6 @@
-fn outer() {
-  let x = "outside";
-  fn inner() {
-    print x;
-  }
-
-  return inner;
+let x = "hallo";
+fn test() {
+	print x;
 }
 
-let closure = outer();
-closure();
+test();
