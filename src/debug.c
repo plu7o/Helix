@@ -16,9 +16,9 @@ void disassembleChunk(Chunk *chunk, const char *name) {
 
 static int constantInstruction(const char *name, Chunk *chunk, int offset) {
   uint8_t constant = chunk->code[offset + 1];
-  printf("%-17s--> [ 0x%04d ]: '", name, constant);
+  printf("%-17s--> [ 0x%04d ]: ", name, constant);
   printValue(chunk->constants.values[constant]);
-  printf("'\n");
+  printf("\n");
   return offset + 2;
 }
 
@@ -75,6 +75,10 @@ int disassembleInstruction(Chunk *chunk, int offset) {
     return byteInstruction("OP_GET_UPVALUE", chunk, offset);
   case OP_SET_UPVALUE:
     return byteInstruction("OP_SET_UPVALUE", chunk, offset);
+  case OP_GET_PROPERTY:
+    return constantInstruction("OP_SET_PROPERTY", chunk, offset);
+  case OP_SET_PROPERTY:
+    return constantInstruction("OP_GET_PROPERTY", chunk, offset);
   case OP_EQUAL:
     return simpleInstruction("OP_EQUAL", offset);
   case OP_NOT_EQUAL:
@@ -129,6 +133,8 @@ int disassembleInstruction(Chunk *chunk, int offset) {
     return simpleInstruction("OP_CLOSE_UPVALUE", offset);
   case OP_RETURN:
     return simpleInstruction("OP_RETURN", offset);
+  case OP_CLASS:
+    return constantInstruction("OP_CLASS", chunk, offset);
   default:
     printf("Unknown opcode %d\n", instruction);
     return offset + 1;
