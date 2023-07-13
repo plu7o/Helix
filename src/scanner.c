@@ -223,7 +223,7 @@ Token scanToken() {
   case '.':
     return makeToken(TOKEN_DOT);
   case '-':
-    return makeToken(TOKEN_MINUS);
+    return makeToken(match('>') ? TOKEN_ARROW : TOKEN_MINUS);
   case '+':
     return makeToken(TOKEN_PLUS);
   case '/':
