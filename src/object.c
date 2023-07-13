@@ -18,16 +18,24 @@ static Obj *allocateObject(size_t size, ObjType type) {
   vm.objects = object;
 
 #ifdef DEBUG_LOG_GC
-  printf("%p allocate %zu for %s\n", (void *)object, size,
+  printf("[+] %p allocate %zu bytes for %s\n", (void *)object, size,
          getObjTypeName(type));
 #endif
 
   return object;
 }
 
+ObjBoundMethod *newBoundMethod(Value receiver, ObjClosure *method) {
+  ObjBoundMethod *bound = ALLOCATE_OBJ(ObjBoundMethod, OBJ_BOUND_METHOD);
+  bound->receiver = receiver;
+  bound->method = method;
+  return bound;
+}
+
 ObjClass *newClass(ObjString *name) {
   ObjClass *klass = ALLOCATE_OBJ(ObjClass, OBJ_CLASS);
   klass->name = name;
+  initTable(&klass->methods);
   return klass;
 }
 
@@ -128,6 +136,9 @@ static void printFunction(ObjFunction *function) {
 
 void printObject(Value value) {
   switch (OBJ_TYPE(value)) {
+  case OBJ_BOUND_METHOD:
+    printFunction(AS_BOUND_METHOD(value)->method->function);
+    break;
   case OBJ_CLASS:
     printf("{ %s }", AS_CLASS(value)->name->chars);
     break;
@@ -154,6 +165,8 @@ void printObject(Value value) {
 
 const char *getObjTypeName(ObjType type) {
   switch (type) {
+  case OBJ_BOUND_METHOD:
+    return "BOUND_METHOD";
   case OBJ_CLASS:
     return "CLASS";
   case OBJ_CLOSURE:
@@ -168,5 +181,7 @@ const char *getObjTypeName(ObjType type) {
     return "UPVALUE";
   case OBJ_STRING:
     return "STRING";
+  default:
+    return "Unknown ObjType";
   }
 }
