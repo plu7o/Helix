@@ -1,5 +1,3 @@
-#include <stdbool.h>
-#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,6 +27,7 @@ typedef enum {
   PREC_COMPARISON,
   PREC_TERM,
   PREC_FACTOR,
+  PREC_UNARY_INCREMENT,
   PREC_UNARY,
   PREC_CALL,
   PREC_PRIMARY
@@ -434,6 +433,9 @@ static void binary(bool canAssign) {
   case TOKEN_SLASH:
     emitByte(OP_DIVIDE);
     break;
+  case TOKEN_PLUS_PLUS:
+    emitByte(OP_INCREMENT);
+    break;
   default:
     return; // Unreachable
   }
@@ -582,6 +584,12 @@ static void unary(bool canAssign) {
   case TOKEN_MINUS:
     emitByte(OP_NEGATE);
     break;
+  case TOKEN_PLUS_PLUS:
+    emitByte(OP_INCREMENT);
+    break;
+  case TOKEN_MINUS_MINUS:
+    emitByte(OP_DECREMENT);
+    break;
   default:
     return; // Unreachable
   }
@@ -595,7 +603,9 @@ ParseRule rules[] = {
     [TOKEN_COMMA] = {NULL, NULL, PREC_NONE},
     [TOKEN_DOT] = {NULL, dot, PREC_CALL},
     [TOKEN_MINUS] = {unary, binary, PREC_TERM},
+    [TOKEN_MINUS_MINUS] = {unary, NULL, PREC_NONE},
     [TOKEN_PLUS] = {NULL, binary, PREC_TERM},
+    [TOKEN_PLUS_PLUS] = {unary, NULL, PREC_NONE},
     [TOKEN_SEMICOLON] = {NULL, NULL, PREC_NONE},
     [TOKEN_SLASH] = {NULL, binary, PREC_FACTOR},
     [TOKEN_STAR] = {NULL, binary, PREC_FACTOR},
@@ -702,13 +712,12 @@ static void classDeclaration() {
     if (identifiersEqual(&className, &parser.previous)) {
       error("A class can't inherit from itself.");
     }
-
     beginScope();
     addLocal(syntheticToken("super"));
     defineVariable(0);
-
     namedVariable(className, false);
     emitByte(OP_INHERIT);
+    classCompiler.hasSuperclass = true;
   }
 
   namedVariable(className, false);
@@ -718,7 +727,6 @@ static void classDeclaration() {
   }
   consume(TOKEN_RIGHT_BRACE, "Expect '}' after class body.");
   emitByte(OP_POP);
-  classCompiler.hasSuperclass = true;
 
   if (classCompiler.hasSuperclass) {
     endScope();

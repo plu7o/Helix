@@ -1,36 +1,8 @@
-class Person {
-	init(name, age, gender) {
-		self.name = name;
-		self.age = age;
-		self.gender = gender;
-	}
+let a = 1;
+let b = 2;
+let sumB = a + --b;
 
-	sayName() {
-		print "hallo mein name ist " + self.name;
-	}
-	sayAge() {
-		print self.age;
-	}
-	sayGender() {
-		print "Ich bin ein/e " + self.gender;
-	}
-	bday() {
-		self.age = self.age + 1;
-		self.sayAge();
-	}
+for (i = 0; i < 10; i = ++i) {
+   print sumB;
 }
-
-let julia = Person("Julia", 23, "Frau");
-let ricardo = Person("Ricardo", 24, "Mann");
-let simon = Person("Simon", 23, "Mann");
-
-fn wg() {
-	julia.sayName();
-	ricardo.sayName();
-	simon.sayName();
-}
-
-wg();
-ricardo.bday();
-ricardo.bday();
 

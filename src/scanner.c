@@ -223,9 +223,15 @@ Token scanToken() {
   case '.':
     return makeToken(TOKEN_DOT);
   case '-':
-    return makeToken(match('>') ? TOKEN_ARROW : TOKEN_MINUS);
+    if (match('>')) {
+      return makeToken(TOKEN_ARROW);
+    } else if (match('-')) {
+      return makeToken(TOKEN_MINUS_MINUS);
+    } else {
+      return makeToken(TOKEN_MINUS);
+    }
   case '+':
-    return makeToken(TOKEN_PLUS);
+    return makeToken(match('+') ? TOKEN_PLUS_PLUS : TOKEN_PLUS);
   case '/':
     return makeToken(TOKEN_SLASH);
   case '*':

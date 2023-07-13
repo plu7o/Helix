@@ -1,0 +1,37 @@
+class Animal {
+	init(name, age) {
+		self.name = name;
+		self.age = age;
+	}
+
+	getName() {
+		print "hallo mein name ist " + self.name;
+	}
+
+	getAge() {
+		print self.age;
+	}
+}
+
+class Dog -> Animal {
+	init(name, age, race) {
+		self.name = name;
+		self.age = age;
+		self.race = race;
+	}
+
+	bark() {
+		print "Bark baark!";
+	}
+}
+
+let start = clock();
+
+for (let i = 0; i < 100000; i = ++i) {
+	let rottweiler = Dog("Chop", i, "Rottweiler");
+	rottweiler.getName();
+	rottweiler.bark();
+}
+
+print clock() - start;
+

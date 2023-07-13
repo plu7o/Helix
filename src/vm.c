@@ -430,6 +430,24 @@ static InterpretResult run() {
       }
       break;
     }
+    case OP_INCREMENT: {
+      if (!IS_NUMBER(peek(0))) {
+        runtimeError("Only number can be incremented with '++'.");
+        return INTERPRET_RUNTIME_ERROR;
+      }
+      double a = AS_NUMBER(pop());
+      push(NUMBER_VAL(a + 1));
+      break;
+    }
+    case OP_DECREMENT: {
+      if (!IS_NUMBER(peek(0))) {
+        runtimeError("Only number can be incremented with '++'.");
+        return INTERPRET_RUNTIME_ERROR;
+      }
+      double a = AS_NUMBER(pop());
+      push(NUMBER_VAL(a - 1));
+      break;
+    }
     case OP_SUBSTRACT:
       BINARY_OP(NUMBER_VAL, -);
       break;
