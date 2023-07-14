@@ -3,7 +3,7 @@ Helix is inspired by the Clox implementation from the book "[Crafting Interprete
 
 ## Syntax
 
-## Operators
+### Operators
 ```
 // Logic operations
 
@@ -22,13 +22,13 @@ let z = ++y         // Prefix incerement
 
 ```
 ---
-## Variables
+### Variables
 ```
 let a = 1;
 print a;
 ```
 ---
-## Functions
+### Functions
 ```
 fn foo(bar, baz) {
     return bar + baz;
@@ -37,7 +37,7 @@ fn foo(bar, baz) {
 foo(1, 3);
 ```
 ---
-## Closures
+### Closures
 ```
 fn outer(){
     let x = 1;
@@ -51,7 +51,7 @@ let foo = outer();
 foo();
 ```
 ---
-## Class
+### Class
 ```
 class Animal {
     // Constructor
@@ -74,7 +74,7 @@ print dog.getSpecies();
 
 ```
 ---
-## Inheritance
+### Inheritance
 ```
 class Animal {
     // Constructor
