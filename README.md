@@ -13,7 +13,7 @@ let c = 5 == 6;
 let d = 7 != 8;     
 let e = !(9 < 10);  // Logic negation
 
-// Arethmetic operations
+// Arithmetic operations
 
 let x = 1 + 1;      
 let x = 1 - 1;  
