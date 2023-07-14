@@ -1,17 +1,25 @@
 # Helix
 Helix is inspired by the Clox implementation from the book "[Crafting Interpreters](https://craftinginterpreters.com/)" from Robert Nystrom. I read this book and got facinated by the world behind programming languages i took clox implementation and made it my own i added some new feature to the language and i will try to keep adding more over the time.
 
-## Clox implementation
+## Syntax
 
 ## Operators
 ```
-let x = -x;         // Negation
-let y = !(5 < 10);  // Logic negation
-let z = ++x         // Prefix incerement
+// Logic operations
 
-print x;
-print y;
-print z;
+let a = 1 >= 2;     
+let b = 3 <= 4;
+let c = 5 == 6;     
+let d = 7 != 8;     
+let e = !(9 < 10);  // Logic negation
+
+// Arethmetic operations
+
+let x = 1 + 1;      
+let x = 1 - 1;  
+let y = -x;         // Negation
+let z = ++y         // Prefix incerement
+
 ```
 ---
 ## Variables
